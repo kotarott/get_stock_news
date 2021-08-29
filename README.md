@@ -10,3 +10,7 @@
  pip install selenium  
  pip install webdriver_manager  
   
+その他  
+ pip install investpy  
+ ⇒市況データ取得用  
+ 
