@@ -1,39 +1,34 @@
-var ctx = document.getElementById("myLineChart");
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['8月1日', '8月2日', '8月3日', '8月4日', '8月5日', '8月6日', '8月7日'],
-      datasets: [
-        {
-          label: '最高気温(度）',
-          data: [35, 34, 37, 35, 34, 35, 34, 25],
-          borderColor: "rgba(255,0,0,1)",
-          backgroundColor: "rgba(0,0,0,0)"
-        },
-        {
-          label: '最低気温(度）',
-          data: [25, 27, 27, 25, 26, 27, 25, 21],
-          borderColor: "rgba(0,0,255,1)",
-          backgroundColor: "rgba(0,0,0,0)"
-        }
-      ],
-    },
-    options: {
-      title: {
-        display: true,
-        text: '気温（8月1日~8月7日）'
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            suggestedMax: 40,
-            suggestedMin: 0,
-            stepSize: 10,
-            callback: function(value, index, values){
-              return  value +  '度'
-            }
-          }
-        }]
-      },
+$("#search_btn").on("click", function(){
+  const search_keyword = search_word.value
+  const news_source = $("#source").val()
+  if (search_keyword && news_source) {
+    async function run() {
+      const news_list = await eel.get_news_title(news_source, search_keyword)
+      if(news_list) {
+        create_table(news_list)
+      } else {
+        alert("エラー")
+      }
     }
-  });
+    run();
+  } else {
+    alert("ニュースのソースを選択してキーワードを入力してください。")
+  }
+})
+
+function create_table(items) {
+  $("#order_list").remove()
+  let html = "<tbody id='order_list'>"
+  for (i in items[2]) {
+    html += "<tr>"
+      html += "<td>" + item[2][i] + "</td>"
+      html += "<td>"
+        html += "<a href='" + item[1][i] +"'>"
+          html += item[0][i]
+        html += "/a>"
+      html += "</td>"
+    html += "</tr>"
+  }
+  html += "</tbody>"
+  $(".table").append(html)
+}
