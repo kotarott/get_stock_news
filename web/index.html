@@ -23,8 +23,8 @@
                 <div class="card-body">
                     <h5 class="card-title">検索</h5>
                     <select class="form-select mb-2" aria-label="Default select example" id="source">
-                        <option value="bb">Bloomberg</option>
                         <option value="ro">ロイター</option>
+                        <option value="nky">日経新聞</option>
                     </select>
                     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="search_word">
                     <div class="text-end mt-1">
@@ -42,6 +42,7 @@
                     <table class="table">
                         <thead class="table-light">
                             <tr>
+                                <th>##</th>
                                 <th>日付</th>
                                 <th>タイトル</th>
                             </tr>
@@ -53,6 +54,7 @@
         </section>
     </main>
 
+    <script type="text/javascript" src="../eel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/script.js"></script>

@@ -14,3 +14,10 @@
  pip install investpy  
  ⇒市況データ取得用  
  
+## デスクトップアプリ作成
+python -m eel view.py web --onefile  
+  
+日経の記事を取得する場合はルートディレクトリにsecret.pyを作成  
+nky_id="自分のメールアドレス"  
+nky_pw="パスワード"  
+2つの変数を作成しておく。  

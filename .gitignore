@@ -1,3 +1,6 @@
 venv
-secret
+common/secret.py
 memo.html
+dist
+build
+secret.py
