@@ -79,11 +79,12 @@ def get_ro_article(url):
     news_date = driver.find_element_by_css_selector(".ArticlePage-article-header-23J2O .ArticleHeader-date-line-3oc3Y")
     news_wrapper = driver.find_element_by_css_selector(".ArticleBodyWrapper")
     news_content = news_wrapper.find_element_by_tag_name("pre")
+    news_article = news_content.text.replace("\n", "").replace("欧州株式市場：", "\n").replace(" ユーロ圏金融・債券市場：", "\n").replace("ロンドン株式市場：", "\n")
 
     df = pd.DataFrame()
     df = df.append(
             {"title": news_title.text,
-            "article": news_content.text,
+            "article": news_article,
             "date": news_date.text}, 
             ignore_index=True)
     
@@ -140,7 +141,7 @@ def get_nky_news_title(search_keyword):
 def get_nky_article(url):
     # driverを起動
     if os.name == 'nt': #Windows
-        driver = set_driver("chromedriver.exe", False)
+        driver = set_driver("chromedriver.exe", True)
     elif os.name == 'posix': #Mac
         driver = set_driver("chromedriver", False)
     
@@ -178,6 +179,16 @@ def get_nky_article(url):
 
     return df
 
+def output_by_csv(data):
+    if data["title"][0] == "日経スタイルの記事は取得できません":
+        return
+    else:
+        now = datetime.datetime.now()
+        time_stamp = now.strftime("%Y%m%d")
+        file_name = "articles/" + data["title"][0] + "_" + time_stamp + ".csv"
+        print(file_name)
+        data.to_csv(file_name, encoding='utf_8_sig')
+
 # CSV作成関数
 def create_csv(data, file_name="company_list.csv"):
     num = 0
@@ -191,6 +202,12 @@ def create_csv(data, file_name="company_list.csv"):
             data.to_csv(file_name)
             create_log(f'ファイル名:{file_name} を作成しました。')
             return print("ファイルを作成しました。")
+
+def create_folder(folder_name="articles"):
+    if os.path.exists(folder_name):
+        return
+    else:
+        os.mkdir(folder_name)
 
 # ログ作成関数
 def create_log(comment):
@@ -211,8 +228,9 @@ if __name__ == "__main__":
     # df = get_nky_news_title("サマリー")
     # print(list(df[1]))
     # url = "https://jp.reuters.com/article/idJPL4N2PV3F8"
-    # get_ro_article(url)
-    # url = "https://style.nikkei.com/article/DGXMZO54372300U0A110C2000000"
-    # get_nky_article(url)
-    df = get_ro_news_title("欧州市場サマリー")
-    print(df)
+    # data = get_ro_article(url)
+    # output_by_csv(data)
+    url = "https://www.nikkei.com/article/DGXZQOUA0110E0R00C21A9000000/"
+    output_by_csv(get_nky_article(url))
+    # df = get_ro_news_title("欧州市場サマリー")
+    # print(df)

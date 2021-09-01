@@ -16,12 +16,31 @@ $("#search_btn").on("click", function(){
   }
 })
 
+$("#output").on("click", function() {
+  confirm("日経スタイルの記事は取得できません。")
+  let url_list = []
+  $('.form-check-input').each((i,e)=>{
+    if($(e).is(':checked')) {
+      url_list.push(e.value)
+    }
+  });
+  if(url_list) {
+    async function run() {
+      await eel.get_articles(url_list)();
+      alert("データ取得が完了しました。")
+    }
+    run();
+  } else {
+    alert("ファイル名が未記入、または記事が未選択です。")
+  }
+})
+
 function create_table(items) {
   $("#order_list").remove()
   let html = "<tbody id='order_list'>"
   for (i in items[2]) {
     html += "<tr>"
-      html += "<td><input type='checkbox' class='form-check-input'/></td>"
+      html += "<td><input type='checkbox' class='form-check-input' value='" + items[1][i] + "'/></td>"
       html += "<td>" + items[2][i] + "</td>"
       html += "<td>"
         html += "<a href='" + items[1][i] +"' target='_blank'>"

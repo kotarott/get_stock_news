@@ -9,6 +9,7 @@
 スクレイピング用  
  pip install selenium  
  pip install webdriver_manager  
+ pip install threading  
   
 その他  
  pip install investpy  
